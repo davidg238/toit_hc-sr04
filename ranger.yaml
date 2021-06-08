@@ -1,0 +1,9 @@
+# filename: ranger.yaml
+
+# Executes 'ranger' app on install and periodically.
+
+name: ranger
+entrypoint: ranger.toit
+triggers:
+    on_install: true
+    on_interval: 10s
