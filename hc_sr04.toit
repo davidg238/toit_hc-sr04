@@ -16,8 +16,8 @@ is more reliable (https://learn.adafruit.com/ultrasonic-sonar-distance-sensors).
 
 class HC_SR04:
 
-  trig_ /gpio.Pin
-  echo_ /gpio.Pin
+  trig_ /gpio.Pin  // The ESP 3v3 output will switch the 5v trigger input
+  echo_ /gpio.Pin  // The ESP32 inputs are 3v3, level shifting the 5v echo pulse is mandatory
 
   statsBefore := process_stats
   statsAfter  := process_stats

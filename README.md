@@ -8,6 +8,7 @@ The echo pulse width was measured 3 ways, none of them satisfactorily:
 - <b>poll_us</b> samples the echo signal over a period, to determine the pulse width.
 - <b>edge_us</b> is the simple implementation, creating a duration by the rising and falling edges.
 
+The distance to target was 62in, the <b>duty_us</b> mean was pretty close, with significant min/max range.
 An excerpt from the console log, using the <b>duty_us</b>, is below.
 
 | Message                                                                       | Created    |
@@ -23,3 +24,5 @@ An excerpt from the console log, using the <b>duty_us</b>, is below.
 |Time: 00:16 Count: 300 Mean nan samp_var nan pop_var nan Min 21.7 Max 83.7|15:16:11|
 |Time: 00:6 Count: 300 Mean 60.6 samp_var 4.6 pop_var 4.6 Min 43.9 Max 68.7|15:06:10|
 |Time: 23:56 Count: 300 Mean 61.3 samp_var 7.1 pop_var 7.1 Min 33.9 Max 81.3|14:56:10|
+
+(It should be noted that the CircuitPython examples for this sensor use a `digitalio` library to provide good results.  'Bit-banging' the interface like shown here, also produces poor results.)
