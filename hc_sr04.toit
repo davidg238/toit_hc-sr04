@@ -39,24 +39,24 @@ class HC_SR04:
     trig_.close
     echo_.close
 
-  duty_us -> int:
+  duty_us -> float:
 
-    pulseCount := 0
-    loopCount := 0
-    
+    CYCLE ::= 1000
+    rounds := 0
+    sum := 0
+    until ::= Time.monotonic_us + 50_000  // https://docs.toit.io/language/math/
+
     trig_.set 1
     sleep duration_10us
     trig_.set 0
 
-    exception := catch:
-      with_timeout --ms=50:
-        while true:
-          pulseCount += echo_.get
-          loopCount += 1
-    if exception:
-      print "$pulseCount  $loopCount"
-      return (pulseCount / loopCount) * 50000
-    return 0
+    actual_duration := Duration.of:
+      while Time.monotonic_us < until:
+        CYCLE.repeat:
+          sum += echo_.get
+        rounds++
+    total := rounds * CYCLE
+    return (sum.to_float / total) * actual_duration.in_us
 
   poll_us -> int:
 
@@ -93,6 +93,6 @@ class HC_SR04:
     return duty_us / 148.0
 
   read_cm -> float:
-    return edge_us / 58.0
+    return duty_us / 58.0
 
 

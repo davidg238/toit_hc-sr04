@@ -6,4 +6,4 @@ name: ranger
 entrypoint: ranger.toit
 triggers:
     on_install: true
-    on_interval: 10s
+    on_interval: 10m

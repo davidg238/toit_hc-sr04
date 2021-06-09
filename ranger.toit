@@ -13,16 +13,13 @@ main:
                 --echo=gpio.Pin 22
 
     ranger.on
-    statsP := statistics.OnlineStatistics
-    statsE := statistics.OnlineStatistics
-    count := 100
-    timeoutP := 0
-    timeoutE := 0
-
+    stats := statistics.OnlineStatistics
+    count := 300
+/*
     range := ranger.read_in
     print "Range: $(%.1f range) in"
     
-
+*/
 /*
     exception := catch:
         range := ranger.read_in
@@ -30,24 +27,13 @@ main:
     if exception:
         print "ranger timeout"
 */
-/*
+
     count.repeat: | i |
 
-        exception := catch:
-            statsP.update(ranger.poll_us)
-        if exception:
-            timeoutP += 1
-
-        exception = catch:
-            statsE.update(ranger.edge_us)
-        if exception:
-            timeoutE += 1
-
+        stats.update(ranger.read_in)
         sleep --ms=1000
 
     time := Time.now.local
-    print "Time: $(%02d time.h):$(%1d time.m) Poll $(statsP.count) TimOuts $(timeoutP) Mean $(%.1f statsP.mean)" // samp_var $(%.1f statsP.sample_variance) pop_var $(%.1f statsP.population_variance) Min $(%.1f statsP.min) Max $(%.1f statsP.max)"
-    print "Time: $(%02d time.h):$(%1d time.m) Edge $(statsE.count) TimOuts $(timeoutE) Mean $(%.1f statsE.mean)" // samp_var $(%.1f statsE.sample_variance) pop_var $(%.1f statsE.population_variance) Min $(%.1f statsE.min) Max $(%.1f statsE.max)"
-    print "-------------------------------------"
-*/
+    print "Time: $(%02d time.h):$(%1d time.m) Count: $(stats.count) Mean $(%.1f stats.mean) samp_var $(%.1f stats.sample_variance) pop_var $(%.1f stats.population_variance) Min $(%.1f stats.min) Max $(%.1f stats.max)"
+
     ranger.off
